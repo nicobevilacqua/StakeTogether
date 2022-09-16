@@ -4,9 +4,9 @@ import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 import Card from './Card';
 
-export default function Main() {
+export default function Stake() {
   return (
-    <div className='main'>
+    <div className='stake'>
       <Container maxWidth="lg">
         <Grid container spacing={2}>
           <Grid margin={'0 auto'} item xs={6}>

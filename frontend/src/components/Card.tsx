@@ -60,7 +60,7 @@ export default function Card() {
           />
         </Grid>
       </Grid>
-      <Grid marginTop={'48px'} container spacing={2}>
+      <Grid marginTop={'24px'} container spacing={2}>
           <Grid item xs={12}>
             <Button fullWidth={true} variant="contained">SUBMIT</Button>
           </Grid>
