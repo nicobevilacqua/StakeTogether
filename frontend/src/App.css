@@ -1,0 +1,35 @@
+.main {
+    margin-top: 120px;
+    margin: 64px 0 24px 0;
+}
+.header {
+    margin-top: 16px;
+}
+.progress {
+    margin-top: 48px;
+}
+.address {
+    text-align: right;
+    margin-top: 7px;
+}
+.icon-header {
+    margin-right: 6px;
+}
+.button-reward {
+    margin-left: 16px;
+}
+.button-reward button {
+    color: white;
+}
+.address-cumb {
+    margin-left: 16px;
+    background: black;
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+.card {
+    width: 100%;
+    border-radius: 18px;
+    background: linear-gradient(65.21deg, rgb(55, 57, 74) 19.1%, rgb(62, 75, 79) 100%);
+    padding: 20px;
+}
