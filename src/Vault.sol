@@ -26,7 +26,7 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
     }
 
     constructor(
-        ISenseiStake _stake,
+        address _stake,
         uint256 _VAULT_AMOUNT,
         address _weth
     ) ERC4626(ERC20(_weth), "StakeTogetherToken", "STT") {
@@ -34,7 +34,7 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
 
         VAULT_AMOUNT = _VAULT_AMOUNT;
 
-        stake = _stake;
+        stake = ISenseiStake(_stake);
     }
 
     function initialize() external initializer {}

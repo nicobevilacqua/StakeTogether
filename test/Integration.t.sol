@@ -40,7 +40,7 @@ contract VaultManagerTest is Test {
 
         senseiStake = new MockSenseiStake();
 
-        vaultManager = new VaultManager(ISenseiStake(address(senseiStake)), address(weth));
+        vaultManager = new VaultManager(address(senseiStake), address(weth));
     }
 
     function testCreateOneVault() public {

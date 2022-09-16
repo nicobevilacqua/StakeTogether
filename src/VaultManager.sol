@@ -25,7 +25,7 @@ contract VaultManager {
     event FundsAdded(address indexed user, uint256 amount, uint256 timestamp);
     event VaultCreated(address indexed vault, uint256 timestamp);
 
-    constructor(ISenseiStake _stake, address _weth) {
+    constructor(address _stake, address _weth) {
         weth = _weth;
         vaultImplementation = address(new Vault(_stake, VAULT_AMOUNT, _weth));
         _createNextVault();

@@ -40,14 +40,11 @@ contract VaultManagerTest is Test {
 
         senseiStake = new MockSenseiStake();
 
-        vaultManager = new VaultManager(ISenseiStake(address(senseiStake)), address(weth));
+        vaultManager = new VaultManager(address(senseiStake), address(weth));
     }
 
     function testFuzz(uint256 _amount) public {
-        VaultManager _vaultManager = new VaultManager(
-            ISenseiStake(address(senseiStake)),
-            address(weth)
-        );
+        VaultManager _vaultManager = new VaultManager(address(senseiStake), address(weth));
 
         address investor = makeAddr("investor");
         deal(address(weth), investor, _amount);
