@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
 import BoltIcon from '@mui/icons-material/Bolt';
 import GradeIcon from '@mui/icons-material/Grade';
+import LaptopIcon from '@mui/icons-material/Laptop';
 import Address from './Address';
 
 export default function Header() {
@@ -12,26 +13,26 @@ export default function Header() {
     <div className='header'>
       <Container maxWidth="lg">
         <Grid container spacing={2}>
-          <Grid item xs={2}>
-            <Typography marginTop={'7px'}>LOGO</Typography>
-          </Grid>
-          <Grid item xs={1}>
+          <Grid item xs={8}>
+            <Typography display={'inline-block'} marginTop={'7px'} marginRight={'64px'}>LOGO</Typography>
             <Button variant="text">
               <BoltIcon className='icon-header'/>
               Stake
             </Button>
-          </Grid>
-          <Grid item xs={1}>
-            <div className='button-reward'>
-              <Button className='button-reward' variant="text">
+            <div className='button-container'>
+              <Button variant="text">
                 <GradeIcon className='icon-header'/>
-                Rewards
+                Withdraw
+              </Button>
+            </div>
+            <div className='button-container'>
+              <Button variant="text">
+                <LaptopIcon className='icon-header'/>
+                Dashboard
               </Button>
             </div>
           </Grid>
-          <Grid item xs={5}>
-          </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <Address/>
           </Grid>
         </Grid>

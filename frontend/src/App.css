@@ -1,3 +1,9 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .main {
     margin-top: 120px;
     margin: 64px 0 24px 0;
@@ -15,10 +21,11 @@
 .icon-header {
     margin-right: 6px;
 }
-.button-reward {
+.button-container {
     margin-left: 16px;
+    display: inline-block;
 }
-.button-reward button {
+.button-container button {
     color: white;
 }
 .address-cumb {
@@ -32,4 +39,19 @@
     border-radius: 18px;
     background: linear-gradient(65.21deg, rgb(55, 57, 74) 19.1%, rgb(62, 75, 79) 100%);
     padding: 20px;
+}
+.text-grey {
+    color: #ffffffcc;
+}
+.text-success {
+    color: #61b75f;
+}
+.text-white {
+    color: white;
+}
+.input-amount fieldset,.input-amount fieldset:hover {
+    border-color: white;
+}
+.input-amount label, .input-amount p, .input-amount input {
+    color: white;
 }
