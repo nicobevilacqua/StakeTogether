@@ -16,7 +16,7 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
 
     uint256 public immutable VAULT_AMOUNT;
 
-    uint256 public stakeId;
+    uint256 public tokenId;
 
     CurrentState public state;
     enum CurrentState {
@@ -62,7 +62,7 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
         if (totalAssets() == VAULT_AMOUNT) {
             state = CurrentState.WORKING;
             WETH(payable(address(asset))).withdraw(VAULT_AMOUNT);
-            stakeId = stake.buyNode{value: VAULT_AMOUNT}();
+            tokenId = stake.buyNode{value: VAULT_AMOUNT}();
         }
     }
 
@@ -76,23 +76,14 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
         require(state == CurrentState.FUNDING || state == CurrentState.FINISHED, "vault locked");
     }
 
-    function exitStake(uint256 _tokenId) external {
-        stake.exitStake(_tokenId);
+    function exitStake() external {
+        state = CurrentState.FINISHED;
+        stake.exitStake(tokenId);
+        (bool sent, ) = address(asset).call{value: address(this).balance}("");
+        require(sent, "send failed");
     }
 
-    receive() external payable {
-        // allow unwrap WETH
-        if (address(asset) == msg.sender) {
-            return;
-        } else if (address(stake) == msg.sender) {
-            // wrap eth
-            require(state == CurrentState.FINISHED, "node has not finished");
-            (bool sent, ) = address(asset).call{value: address(this).balance}("");
-            require(sent, "send failed");
-        } else {
-            revert("no me mandes eth");
-        }
-    }
+    receive() external payable {}
 
     function onERC721Received(
         address,
