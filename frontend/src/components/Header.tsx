@@ -18,17 +18,19 @@ export default function Header() {
         <Grid container spacing={2}>
           <Grid item xs={8}>
             <Typography display={'inline-block'} marginTop={'7px'} marginRight={'64px'}>LOGO</Typography>
-            <Button onClick={() => navigate('/withdraw')} variant="text">
-              <BoltIcon className='icon-header'/>
-              Stake
-            </Button>
-            <div className='button-container'>
+            <div className={`button-container ${window.location.hash === '#/' && 'active'}`}>
+              <Button onClick={() => navigate('/')} variant="text">
+                <BoltIcon className='icon-header'/>
+                Stake
+              </Button>
+            </div>
+            <div className={`button-container ${window.location.hash === '#/withdraw' && 'active'}`}>
               <Button onClick={() => navigate('/withdraw')} variant="text">
                 <GradeIcon className='icon-header'/>
                 Withdraw
               </Button>
             </div>
-            <div className='button-container'>
+            <div className={`button-container ${window.location.hash === '#/dashboard' && 'active'}`}>
               <Button onClick={() => navigate('/dashboard')} variant="text">
                 <LaptopIcon className='icon-header'/>
                 Dashboard

@@ -28,6 +28,9 @@ input::-webkit-inner-spin-button {
 .button-container button {
     color: white;
 }
+.button-container.active button {
+    color: #1676d2;
+}
 .address-cumb {
     margin-left: 16px;
     background: black;
