@@ -15,35 +15,41 @@ contract VaultManager {
     uint256 public constant VAULT_AMOUNT = 32 ether;
     address public immutable vaultImplementation;
 
-    address _nextVault;
+    address internal _nextVault;
 
     mapping(uint256 => address[]) public vaults;
     mapping(address => uint256[]) public userVaults;
+    mapping(uint256 => address) public vaultAddress;
 
     event FundsAdded(address indexed user, uint256 amount, uint256 timestamp);
     event VaultCreated(address indexed vault, uint256 timestamp);
 
     constructor() {
-        vaultImplementation = address(new Vault(VAULT_AMOUNT), address(this));
+        vaultImplementation = address(new Vault(VAULT_AMOUNT));
     }
 
     function addFunds() external payable {
         require(msg.value > 0, "insufficient funds");
 
+        Vault nextVault = Vault(_nextVault);
+
+        uint256 currentVaultAmount = nextVault.totalSupply();
+
         uint256 userPendingFunds = msg.value;
+
         while (userPendingFunds > 0) {
             uint256 nextVaultInvestmentAmount = Math.min(
-                VAULT_AMOUNT - nextVaultBalance,
+                VAULT_AMOUNT - currentVaultAmount,
                 userPendingFunds
             );
 
-            nextVaultInvestors.push(Investor(msg.sender, nextVaultInvestmentAmount));
-
-            if (nextVaultBalance == VAULT_AMOUNT) {
-                _createNextVault();
-            }
+            nextVault.addFunds{value: nextVaultInvestmentAmount}(msg.sender);
 
             userPendingFunds -= nextVaultInvestmentAmount;
+
+            if (nextVaultInvestmentAmount != userPendingFunds) {
+                _createNextVault();
+            }
         }
 
         emit FundsAdded(msg.sender, msg.value, block.timestamp);
@@ -55,12 +61,7 @@ contract VaultManager {
         uint256 vaultId = _vaultId.current();
         _vaultId.increment();
 
-        Investor[] memory _investors = nextVaultInvestors;
-
-        address[] vaultInvestors = Vault(newVaultImplementation).initialize(vaultId, _investors);
-
-        nextVaultBalance = 0;
-        delete nextVaultInvestors;
+        Vault(newVaultImplementation).initialize(vaultId);
 
         emit VaultCreated(newVaultImplementation, block.timestamp);
     }
