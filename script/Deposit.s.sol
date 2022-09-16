@@ -10,9 +10,9 @@ import {MockSenseiStake} from "../src/mocks/MockSenseiStake.sol";
 import {VaultManager} from "../src/VaultManager.sol";
 
 contract DepositScript is Script {
-    VaultManager vaultManager;
-    WETH weth;
-    uint256 amount;
+    VaultManager private vaultManager;
+    WETH private weth;
+    uint256 private amount;
 
     function setUp() public {
         vaultManager = VaultManager(vm.envAddress("MANAGER"));
