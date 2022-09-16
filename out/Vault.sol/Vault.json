@@ -1,0 +1,402 @@
+{
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint8",
+          "name": "version",
+          "type": "uint8"
+        }
+      ],
+      "name": "Initialized",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_vaultId",
+          "type": "uint256"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "vaultId",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": {
+    "object": "0x608060405234801561001057600080fd5b506101cd806100206000396000f3fe608060405234801561001057600080fd5b50600436106100365760003560e01c806333194c0a1461003b578063fe4b84df14610056575b600080fd5b61004460015481565b60405190815260200160405180910390f35b61006961006436600461017e565b61006b565b005b600054610100900460ff161580801561008b5750600054600160ff909116105b806100a55750303b1580156100a5575060005460ff166001145b61010c5760405162461bcd60e51b815260206004820152602e60248201527f496e697469616c697a61626c653a20636f6e747261637420697320616c72656160448201526d191e481a5b9a5d1a585b1a5e995960921b606482015260840160405180910390fd5b6000805460ff19166001179055801561012f576000805461ff0019166101001790555b6001829055801561017a576000805461ff0019169055604051600181527f7f26b83ff96e1f2b6a682f133852f6798a09c465da95921460cefb38474024989060200160405180910390a15b5050565b60006020828403121561019057600080fd5b503591905056fea2646970667358221220f82cc0e095638cee71dba69fc0a4cf4be14a5748dfb9e5bb33d08f47a8e01d3064736f6c63430008100033",
+    "sourceMap": "151:163:12:-:0;;;;;;;;;;;;;;;;;;;",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x608060405234801561001057600080fd5b50600436106100365760003560e01c806333194c0a1461003b578063fe4b84df14610056575b600080fd5b61004460015481565b60405190815260200160405180910390f35b61006961006436600461017e565b61006b565b005b600054610100900460ff161580801561008b5750600054600160ff909116105b806100a55750303b1580156100a5575060005460ff166001145b61010c5760405162461bcd60e51b815260206004820152602e60248201527f496e697469616c697a61626c653a20636f6e747261637420697320616c72656160448201526d191e481a5b9a5d1a585b1a5e995960921b606482015260840160405180910390fd5b6000805460ff19166001179055801561012f576000805461ff0019166101001790555b6001829055801561017a576000805461ff0019169055604051600181527f7f26b83ff96e1f2b6a682f133852f6798a09c465da95921460cefb38474024989060200160405180910390a15b5050565b60006020828403121561019057600080fd5b503591905056fea2646970667358221220f82cc0e095638cee71dba69fc0a4cf4be14a5748dfb9e5bb33d08f47a8e01d3064736f6c63430008100033",
+    "sourceMap": "151:163:12:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;189:22;;;;;;;;;160:25:14;;;148:2;133:18;189:22:12;;;;;;;218:94;;;;;;:::i;:::-;;:::i;:::-;;;3100:19:8;3123:13;;;;;;3122:14;;3168:34;;;;-1:-1:-1;3186:12:8;;3201:1;3186:12;;;;:16;3168:34;3167:97;;;-1:-1:-1;3236:4:8;1465:19:9;:23;;;3208:55:8;;-1:-1:-1;3246:12:8;;;;;:17;3208:55;3146:190;;;;-1:-1:-1;;;3146:190:8;;583:2:14;3146:190:8;;;565:21:14;622:2;602:18;;;595:30;661:34;641:18;;;634:62;-1:-1:-1;;;712:18:14;;;705:44;766:19;;3146:190:8;;;;;;;;3346:12;:16;;-1:-1:-1;;3346:16:8;3361:1;3346:16;;;3372:65;;;;3406:13;:20;;-1:-1:-1;;3406:20:8;;;;;3372:65;287:7:12::1;:18:::0;;;3457:99:8;;;;3507:5;3491:21;;-1:-1:-1;;3491:21:8;;;3531:14;;-1:-1:-1;948:36:14;;3531:14:8;;936:2:14;921:18;3531:14:8;;;;;;;3457:99;3090:472;218:94:12;:::o;196:180:14:-;255:6;308:2;296:9;287:7;283:23;279:32;276:52;;;324:1;321;314:12;276:52;-1:-1:-1;347:23:14;;196:180;-1:-1:-1;196:180:14:o",
+    "linkReferences": {}
+  },
+  "methodIdentifiers": {
+    "initialize(uint256)": "fe4b84df",
+    "vaultId()": "33194c0a"
+  },
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.16+commit.07a7930e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint8\",\"name\":\"version\",\"type\":\"uint8\"}],\"name\":\"Initialized\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_vaultId\",\"type\":\"uint256\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"vaultId\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/mocks/Vault.sol\":\"Vault\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=lib/openzeppelin-contracts/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":forge-std/=lib/forge-std/src/\"]},\"sources\":{\"lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol\":{\"keccak256\":\"0x89ba7493bb8656af649b9da612ec32b6ff6e8c55a0008663b07bbeff10ff304a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1730729f29a343d80a8e8626ab548641ccd7c285324630d892347a4a1c9f3c42\",\"dweb:/ipfs/QmRyuGFXW83dYkC7xcgTJZ387uEsozAKbzLURw8gm62XM5\"]},\"lib/openzeppelin-contracts/contracts/utils/Address.sol\":{\"keccak256\":\"0x9720545d8ea1f76222f98683f861f919e9c28bd5d5503caa7e3620a21b6aaa24\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://fe3dac0e0258d8396c33fd27c277699a9bfac198f2cb45632c4f5df2c2ca895a\",\"dweb:/ipfs/QmfEWsX7aGpWN9wooHiQo1XjiGM1h6iXeaeMTAJ1TUcnts\"]},\"src/mocks/Vault.sol\":{\"keccak256\":\"0xf45d6bc40f6ed8ec2315e47e560fda4ae6f2bf281add7cf507b460dd26ce7422\",\"license\":\"UNLICENSED\",\"urls\":[\"bzz-raw://42d0e08c18c69c3db285d4eabccafed457f904401f4ea93f70cddde3b10e5bec\",\"dweb:/ipfs/QmRnr2N2AUiKKStQEZ26Jw2WTnoEyCDmNRguDbWvGkUxUu\"]}},\"version\":1}",
+  "metadata": {
+    "compiler": {
+      "version": "0.8.16+commit.07a7930e"
+    },
+    "language": "Solidity",
+    "output": {
+      "abi": [
+        {
+          "inputs": [
+            {
+              "internalType": "uint8",
+              "name": "version",
+              "type": "uint8",
+              "indexed": false
+            }
+          ],
+          "type": "event",
+          "name": "Initialized",
+          "anonymous": false
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_vaultId",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "nonpayable",
+          "type": "function",
+          "name": "initialize"
+        },
+        {
+          "inputs": [],
+          "stateMutability": "view",
+          "type": "function",
+          "name": "vaultId",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ]
+        }
+      ],
+      "devdoc": {
+        "kind": "dev",
+        "methods": {},
+        "version": 1
+      },
+      "userdoc": {
+        "kind": "user",
+        "methods": {},
+        "version": 1
+      }
+    },
+    "settings": {
+      "remappings": [
+        ":@openzeppelin/=lib/openzeppelin-contracts/",
+        ":ds-test/=lib/forge-std/lib/ds-test/src/",
+        ":forge-std/=lib/forge-std/src/"
+      ],
+      "optimizer": {
+        "enabled": true,
+        "runs": 200
+      },
+      "metadata": {
+        "bytecodeHash": "ipfs"
+      },
+      "compilationTarget": {
+        "src/mocks/Vault.sol": "Vault"
+      },
+      "libraries": {}
+    },
+    "sources": {
+      "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol": {
+        "keccak256": "0x89ba7493bb8656af649b9da612ec32b6ff6e8c55a0008663b07bbeff10ff304a",
+        "urls": [
+          "bzz-raw://1730729f29a343d80a8e8626ab548641ccd7c285324630d892347a4a1c9f3c42",
+          "dweb:/ipfs/QmRyuGFXW83dYkC7xcgTJZ387uEsozAKbzLURw8gm62XM5"
+        ],
+        "license": "MIT"
+      },
+      "lib/openzeppelin-contracts/contracts/utils/Address.sol": {
+        "keccak256": "0x9720545d8ea1f76222f98683f861f919e9c28bd5d5503caa7e3620a21b6aaa24",
+        "urls": [
+          "bzz-raw://fe3dac0e0258d8396c33fd27c277699a9bfac198f2cb45632c4f5df2c2ca895a",
+          "dweb:/ipfs/QmfEWsX7aGpWN9wooHiQo1XjiGM1h6iXeaeMTAJ1TUcnts"
+        ],
+        "license": "MIT"
+      },
+      "src/mocks/Vault.sol": {
+        "keccak256": "0xf45d6bc40f6ed8ec2315e47e560fda4ae6f2bf281add7cf507b460dd26ce7422",
+        "urls": [
+          "bzz-raw://42d0e08c18c69c3db285d4eabccafed457f904401f4ea93f70cddde3b10e5bec",
+          "dweb:/ipfs/QmRnr2N2AUiKKStQEZ26Jw2WTnoEyCDmNRguDbWvGkUxUu"
+        ],
+        "license": "UNLICENSED"
+      }
+    },
+    "version": 1
+  },
+  "ast": {
+    "absolutePath": "src/mocks/Vault.sol",
+    "id": 23919,
+    "exportedSymbols": {
+      "Initializable": [
+        23407
+      ],
+      "Vault": [
+        23918
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "39:276:12",
+    "nodes": [
+      {
+        "id": 23899,
+        "nodeType": "PragmaDirective",
+        "src": "39:24:12",
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".13"
+        ]
+      },
+      {
+        "id": 23901,
+        "nodeType": "ImportDirective",
+        "src": "65:84:12",
+        "absolutePath": "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "file": "@openzeppelin/contracts/proxy/utils/Initializable.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 23919,
+        "sourceUnit": 23408,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 23900,
+              "name": "Initializable",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 23407,
+              "src": "73:13:12",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "id": 23918,
+        "nodeType": "ContractDefinition",
+        "src": "151:163:12",
+        "nodes": [
+          {
+            "id": 23905,
+            "nodeType": "VariableDeclaration",
+            "src": "189:22:12",
+            "constant": false,
+            "functionSelector": "33194c0a",
+            "mutability": "mutable",
+            "name": "vaultId",
+            "nameLocation": "204:7:12",
+            "scope": 23918,
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 23904,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "189:7:12",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "id": 23917,
+            "nodeType": "FunctionDefinition",
+            "src": "218:94:12",
+            "body": {
+              "id": 23916,
+              "nodeType": "Block",
+              "src": "277:35:12",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 23914,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 23912,
+                      "name": "vaultId",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 23905,
+                      "src": "287:7:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 23913,
+                      "name": "_vaultId",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 23907,
+                      "src": "297:8:12",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "287:18:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 23915,
+                  "nodeType": "ExpressionStatement",
+                  "src": "287:18:12"
+                }
+              ]
+            },
+            "functionSelector": "fe4b84df",
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "id": 23910,
+                "kind": "modifierInvocation",
+                "modifierName": {
+                  "id": 23909,
+                  "name": "initializer",
+                  "nameLocations": [
+                    "265:11:12"
+                  ],
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 23309,
+                  "src": "265:11:12"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "265:11:12"
+              }
+            ],
+            "name": "initialize",
+            "nameLocation": "227:10:12",
+            "parameters": {
+              "id": 23908,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 23907,
+                  "mutability": "mutable",
+                  "name": "_vaultId",
+                  "nameLocation": "246:8:12",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 23917,
+                  "src": "238:16:12",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 23906,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "238:7:12",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "237:18:12"
+            },
+            "returnParameters": {
+              "id": 23911,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "277:0:12"
+            },
+            "scope": 23918,
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 23902,
+              "name": "Initializable",
+              "nameLocations": [
+                "169:13:12"
+              ],
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 23407,
+              "src": "169:13:12"
+            },
+            "id": 23903,
+            "nodeType": "InheritanceSpecifier",
+            "src": "169:13:12"
+          }
+        ],
+        "canonicalName": "Vault",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "linearizedBaseContracts": [
+          23918,
+          23407
+        ],
+        "name": "Vault",
+        "nameLocation": "160:5:12",
+        "scope": 23919,
+        "usedErrors": []
+      }
+    ],
+    "license": "UNLICENSED"
+  },
+  "id": 12
+}
