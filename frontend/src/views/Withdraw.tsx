@@ -4,7 +4,7 @@ import Header from '../components/Header';
 function Withdraw() {
   return (
     <div className="withdraw">
-      <Header/>
+      <Header />
       withdraw
     </div>
   );

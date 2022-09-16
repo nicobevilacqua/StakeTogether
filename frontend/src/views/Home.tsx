@@ -5,8 +5,8 @@ import Stake from '../components/Stake';
 function Home() {
   return (
     <div className="Home">
-      <Header/>
-      <Stake/>
+      <Header />
+      <Stake />
     </div>
   );
 }
