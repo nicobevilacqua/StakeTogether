@@ -31,6 +31,6 @@ contract MyToken is ERC721, Ownable {
         require(ownerOf(tokenId) == msg.sender, "!owner of vault");
         require(exitDate[tokenId] > block.timestamp, "cant exit yet");
         _burn(tokenId);
-        payable(msg.sender).call{value: 33 ether}();
+        payable(msg.sender).call{value: 33 ether}('');
     }
 }
