@@ -2,14 +2,12 @@
 pragma solidity ^0.8.13;
 
 import {Initializable} from "@openzeppelin/contracts/proxy/utils/Initializable.sol";
-import {ISenseiStake} from "./ISenseiStake.sol";
-
 import {ERC20} from "solmate/tokens/ERC20.sol";
 import {ERC4626} from "solmate/mixins/ERC4626.sol";
-import {IERC721Receiver} from "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
+import {WETH} from "solmate/tokens/WETH.sol";
 
-import {WETH} from "../src/mocks/WETH.sol";
-import "forge-std/console2.sol";
+import {ISenseiStake} from "./ISenseiStake.sol";
+import {IERC721Receiver} from "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 
 contract Vault is ERC4626, Initializable, IERC721Receiver {
     ISenseiStake public immutable stake;

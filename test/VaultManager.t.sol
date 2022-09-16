@@ -2,9 +2,9 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
+import {WETH} from "solmate/tokens/WETH.sol";
 import {VaultManager} from "../src/VaultManager.sol";
 import {Vault} from "../src/Vault.sol";
-import {WETH} from "../src/mocks/WETH.sol";
 import {ISenseiStake} from "../src/ISenseiStake.sol";
 import {MockSenseiStake} from "../src/mocks/MockSenseiStake.sol";
 import {ISenseiStake} from "../src/ISenseiStake.sol";

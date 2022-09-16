@@ -2,9 +2,9 @@
 pragma solidity ^0.8.13;
 
 import "forge-std/Test.sol";
+import {WETH} from "solmate/tokens/WETH.sol";
 import {VaultManager} from "../src/VaultManager.sol";
 import {Vault} from "../src/Vault.sol";
-import {WETH} from "../src/mocks/WETH.sol";
 import {ISenseiStake} from "../src/ISenseiStake.sol";
 import {MockSenseiStake} from "../src/mocks/MockSenseiStake.sol";
 import {ISenseiStake} from "../src/ISenseiStake.sol";
@@ -31,7 +31,7 @@ contract VaultManagerTest is Test {
 
         weth = new WETH();
 
-        vm.deal(address(weth), 100000 ether);
+        weth.deposit{value: 100000 ether}();
 
         deal(address(weth), investor1, 1000 ether);
         deal(address(weth), investor2, 1000 ether);
@@ -83,7 +83,4 @@ contract VaultManagerTest is Test {
             (36 ether * 10 ether) / 32 ether
         );
     }
-
-    receive() external payable {}
-    // agarra la pala capo
 }
