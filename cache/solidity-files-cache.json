@@ -510,55 +510,10 @@
         }
       }
     },
-    "src/VaultManager.sol": {
-      "lastModificationDate": 1663335511675,
-      "contentHash": "184c4b7ddfbd1d082756c3133aea6093",
-      "sourceName": "src/VaultManager.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "bytecodeHash": "ipfs"
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ]
-            }
-          },
-          "evmVersion": "london",
-          "libraries": {}
-        }
-      },
-      "imports": [
-        "lib/openzeppelin-contracts/contracts/proxy/Clones.sol",
-        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
-        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
-        "lib/openzeppelin-contracts/contracts/utils/Counters.sol",
-        "src/mocks/Vault.sol"
-      ],
-      "versionRequirement": "^0.8.13",
-      "artifacts": {
-        "VaultManager": {
-          "0.8.16+commit.07a7930e.Darwin.appleclang": "VaultManager.sol/VaultManager.json"
-        }
-      }
-    },
-    "src/mocks/Vault.sol": {
+    "src/Vault.sol": {
       "lastModificationDate": 1663335498472,
       "contentHash": "62f8bd5ffb291d9b569ed541b4c6ae75",
-      "sourceName": "src/mocks/Vault.sol",
+      "sourceName": "src/Vault.sol",
       "solcConfig": {
         "settings": {
           "optimizer": {
@@ -594,6 +549,51 @@
       "artifacts": {
         "Vault": {
           "0.8.16+commit.07a7930e.Darwin.appleclang": "Vault.sol/Vault.json"
+        }
+      }
+    },
+    "src/VaultManager.sol": {
+      "lastModificationDate": 1663335637980,
+      "contentHash": "983e6f0a0677fc377e6a316ec889a731",
+      "sourceName": "src/VaultManager.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "bytecodeHash": "ipfs"
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "london",
+          "libraries": {}
+        }
+      },
+      "imports": [
+        "lib/openzeppelin-contracts/contracts/proxy/Clones.sol",
+        "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Address.sol",
+        "lib/openzeppelin-contracts/contracts/utils/Counters.sol",
+        "src/Vault.sol"
+      ],
+      "versionRequirement": "^0.8.13",
+      "artifacts": {
+        "VaultManager": {
+          "0.8.16+commit.07a7930e.Darwin.appleclang": "VaultManager.sol/VaultManager.json"
         }
       }
     },
@@ -640,8 +640,8 @@
         "lib/openzeppelin-contracts/contracts/proxy/utils/Initializable.sol",
         "lib/openzeppelin-contracts/contracts/utils/Address.sol",
         "lib/openzeppelin-contracts/contracts/utils/Counters.sol",
-        "src/VaultManager.sol",
-        "src/mocks/Vault.sol"
+        "src/Vault.sol",
+        "src/VaultManager.sol"
       ],
       "versionRequirement": "^0.8.13",
       "artifacts": {
