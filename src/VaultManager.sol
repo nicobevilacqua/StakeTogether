@@ -17,7 +17,6 @@ contract VaultManager {
 
     address internal _nextVault;
 
-    mapping(uint256 => address[]) public vaults;
     mapping(address => uint256[]) public userVaults;
     mapping(uint256 => address) public vaultAddress;
 
@@ -26,6 +25,7 @@ contract VaultManager {
 
     constructor() {
         vaultImplementation = address(new Vault(VAULT_AMOUNT));
+        _createNextVault();
     }
 
     function addFunds() external payable {
@@ -45,6 +45,8 @@ contract VaultManager {
 
             nextVault.addFunds{value: nextVaultInvestmentAmount}(msg.sender);
 
+            userVaults[msg.sender].push(nextVault.vaultId());
+
             userPendingFunds -= nextVaultInvestmentAmount;
 
             if (nextVaultInvestmentAmount != userPendingFunds) {
@@ -56,13 +58,15 @@ contract VaultManager {
     }
 
     function _createNextVault() private {
-        address newVaultImplementation = Clones.clone(vaultImplementation);
+        _nextVault = Clones.clone(vaultImplementation);
 
         uint256 vaultId = _vaultId.current();
         _vaultId.increment();
 
-        Vault(newVaultImplementation).initialize(vaultId);
+        Vault(_nextVault).initialize(vaultId);
 
-        emit VaultCreated(newVaultImplementation, block.timestamp);
+        vaultAddress[vaultId] = _nextVault;
+
+        emit VaultCreated(_nextVault, block.timestamp);
     }
 }
