@@ -2,81 +2,104 @@
 pragma solidity ^0.8.13;
 
 import {Initializable} from "@openzeppelin/contracts/proxy/utils/Initializable.sol";
-import {Address} from "@openzeppelin/contracts/utils/Address.sol";
-import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import {ERC20Burnable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
+import {ISenseiStake} from "./ISenseiStake.sol";
 
-contract Vault is Initializable, ERC20, ERC20Burnable, ReentrancyGuard {
-    uint256 public immutable vaultAmount;
-    uint256 public vaultId;
+import {ERC20} from "solmate/tokens/ERC20.sol";
+import {ERC4626} from "solmate/mixins/ERC4626.sol";
+import {IERC721Receiver} from "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 
-    address public immutable manager;
+import {WETH} from "../src/mocks/WETH.sol";
+import "forge-std/console2.sol";
 
-    bool public locked;
+contract Vault is ERC4626, Initializable, IERC721Receiver {
+    ISenseiStake public immutable stake;
 
-    struct Investor {
-        address user;
-        uint256 investment;
+    uint256 public immutable VAULT_AMOUNT;
+
+    uint256 public stakeId;
+
+    CurrentState public state;
+    enum CurrentState {
+        FUNDING,
+        WORKING,
+        FINISHED
     }
 
-    event FundsAdded(address indexed investor, uint256 amount, uint256 timestamp);
-    event FundsRetired(address indexed investor, uint256 amount, uint256 timestamp);
+    constructor(
+        ISenseiStake _stake,
+        uint256 _VAULT_AMOUNT,
+        address _weth
+    ) ERC4626(ERC20(_weth), "StakeTogetherToken", "STT") {
+        require(_VAULT_AMOUNT > 0, "Invalid VAULT_AMOUNT");
 
-    constructor(uint256 _vaultAmount) ERC20("StakeToguetherToken", "STT") {
-        require(_vaultAmount > 0, "Invalid vaultAmount");
-        vaultAmount = _vaultAmount;
-        manager = msg.sender;
+        VAULT_AMOUNT = _VAULT_AMOUNT;
+
+        stake = _stake;
     }
 
-    function initialize(uint256 _vaultId) external payable initializer {
-        vaultId = _vaultId;
+    function initialize() external initializer {}
+
+    function maxDeposit() public view returns (uint256) {
+        return VAULT_AMOUNT;
     }
 
-    function addFunds() external payable {
-        _addFunds(msg.sender);
+    function maxMint(address) public view override returns (uint256) {
+        return VAULT_AMOUNT;
     }
 
-    function addFunds(address _investor) external payable {
-        require(msg.sender == manager, "permision denied");
-        _addFunds(_investor);
+    function beforeWithdraw(uint256, uint256) internal view override {
+        require(state != CurrentState.WORKING, "node working, funds lock");
     }
 
-    function _addFunds(address _investor) private {
-        require(msg.value > 0, "invalid investment");
-        require(!locked, "vault locked");
+    function totalAssets() public view override returns (uint256) {
+        return asset.balanceOf(address(this));
+    }
 
-        uint256 fundsToReceive = Math.min(vaultAmount - totalSupply(), msg.value);
-        require(fundsToReceive > 0, "invalid funds");
+    function afterDeposit(uint256, uint256) internal override {
+        require(state == CurrentState.FUNDING, "cant deposit");
 
-        _mint(_investor, fundsToReceive);
-
-        if (fundsToReceive < msg.value) {
-            Address.sendValue(payable(_investor), msg.value - fundsToReceive);
-            locked = true;
+        // Lock contract if VAULT_AMOUNT is reached
+        if (totalAssets() == VAULT_AMOUNT) {
+            state = CurrentState.WORKING;
+            WETH(payable(address(asset))).withdraw(VAULT_AMOUNT);
+            stakeId = stake.buyNode{value: VAULT_AMOUNT}();
         }
-
-        emit FundsAdded(_investor, fundsToReceive, block.timestamp);
     }
 
-    function retireFunds(uint256 _amount) external payable {
-        _retireFunds(msg.sender, _amount);
+    function beforeWithdraw(
+        address,
+        address,
+        address,
+        uint256,
+        uint256
+    ) internal view {
+        require(state == CurrentState.FUNDING || state == CurrentState.FINISHED, "vault locked");
     }
 
-    function retireFunds(address _investor, uint256 _amount) external payable {
-        require(msg.sender == manager, "permision denied");
-        _retireFunds(_investor, _amount);
+    function exitStake(uint256 _tokenId) external {
+        stake.exitStake(_tokenId);
     }
 
-    function _retireFunds(address _investor, uint256 _amount) private nonReentrant {
-        require(balanceOf(_investor) > _amount, "invalid amount");
-        require(!locked, "vault locked");
+    receive() external payable {
+        // allow unwrap WETH
+        if (address(asset) == msg.sender) {
+            return;
+        } else if (address(stake) == msg.sender) {
+            // wrap eth
+            require(state == CurrentState.FINISHED, "node has not finished");
+            (bool sent, ) = address(asset).call{value: address(this).balance}("");
+            require(sent, "send failed");
+        } else {
+            revert("no me mandes eth");
+        }
+    }
 
-        Address.sendValue(payable(_investor), _amount);
-
-        _burn(_investor, _amount);
-
-        emit FundsRetired(_investor, _amount, block.timestamp);
+    function onERC721Received(
+        address,
+        address,
+        uint256,
+        bytes calldata
+    ) external pure returns (bytes4) {
+        return IERC721Receiver.onERC721Received.selector;
     }
 }
