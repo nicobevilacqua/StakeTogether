@@ -15,6 +15,7 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
     uint256 public immutable VAULT_AMOUNT;
 
     uint256 public tokenId;
+    uint256 public totalEarns;
 
     CurrentState public state;
     enum CurrentState {
@@ -92,6 +93,7 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
     function exitStake() external {
         state = CurrentState.FINISHED;
         stake.exitStake(tokenId);
+        totalEarns = address(this).balance;
         (bool sent, ) = address(asset).call{value: address(this).balance}("");
         require(sent, "send failed");
     }

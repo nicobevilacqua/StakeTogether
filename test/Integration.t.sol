@@ -89,6 +89,8 @@ contract VaultManagerTest is Test {
 
         assertEq(vault.balanceOf(investor1), 0, "should burn all shares");
 
+        assertEq(vault.totalEarns(), 36 ether);
+
 
     }
 
