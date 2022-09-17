@@ -15,6 +15,7 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
     uint256 public immutable VAULT_AMOUNT;
 
     uint256 public tokenId;
+    uint256 public totalEarns;
 
     CurrentState public state;
     enum CurrentState {
@@ -35,7 +36,11 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
         stake = ISenseiStake(_stake);
     }
 
-    function initialize() external initializer {}
+    receive() external payable {}
+
+    function initialize() external initializer {
+        // TODO ver que datos extras necesitamos setear
+    }
 
     function maxDeposit() public view returns (uint256) {
         return VAULT_AMOUNT;
@@ -64,6 +69,17 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
         }
     }
 
+    function redeemETH(
+        uint256 assets
+    ) external {
+        WETH _weth = WETH(payable(address(asset)));
+        uint256 _earn = previewRedeem(assets);
+        redeem(assets, address(this), msg.sender);
+        _weth.withdraw(_earn);
+        (bool sent, ) = address(msg.sender).call{value: _earn}("");
+        require(sent, "send failed");
+    }
+
     function beforeWithdraw(
         address,
         address,
@@ -77,11 +93,10 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
     function exitStake() external {
         state = CurrentState.FINISHED;
         stake.exitStake(tokenId);
+        totalEarns = address(this).balance;
         (bool sent, ) = address(asset).call{value: address(this).balance}("");
         require(sent, "send failed");
     }
-
-    receive() external payable {}
 
     function onERC721Received(
         address,
@@ -90,5 +105,9 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
         bytes calldata
     ) external pure returns (bytes4) {
         return IERC721Receiver.onERC721Received.selector;
+    }
+
+    function exitDate() external view returns (uint256) {
+        return stake.exitDate(tokenId);
     }
 }
