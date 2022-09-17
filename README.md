@@ -1,11 +1,11 @@
 <h1 align="center">
   <br>
-  LOGO
+  <img src="https://user-images.githubusercontent.com/12957692/190872812-dd6f2133-4e67-476c-ba04-6b0aa63ecde3.png" height=100 width=100 />
   <br><br>
-  Adminpro - Backend
+  Stake Together
   <br>
 </h1>
-<h4 align="center">Stake Together</h4>
+<h4 align="center">Ganemos rewards colaborando con la descentralización de Ethereum</h4>
 
 
 ## Getting started (frontend)
