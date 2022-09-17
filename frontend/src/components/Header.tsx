@@ -7,7 +7,6 @@ import { Typography } from '@mui/material';
 import BoltIcon from '@mui/icons-material/Bolt';
 import GradeIcon from '@mui/icons-material/Grade';
 import LaptopIcon from '@mui/icons-material/Laptop';
-import Address from './Address';
 import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
@@ -45,7 +44,6 @@ export default function Header() {
           </Grid>
           <Grid item xs={4}>
             <ConnectButton />
-            <Address />
           </Grid>
         </Grid>
       </Container>
