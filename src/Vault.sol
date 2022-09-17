@@ -110,4 +110,8 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
     function exitDate() external view returns (uint256) {
         return stake.exitDate(tokenId);
     }
+
+    function canExit() external view returns (bool) {
+        return stake.exitDate(tokenId) < block.timestamp;
+    }
 }

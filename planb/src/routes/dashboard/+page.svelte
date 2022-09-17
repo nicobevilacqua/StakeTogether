@@ -29,14 +29,37 @@
         exitDate: await _contract.exitDate(),
         userBalance: await _contract.balanceOf($wallet),
         tokenId: await _contract.tokenId(),
-        // totalEarns: await _contract.totalEarns()
-      };		  
+        totalEarns: await _contract.totalEarns(),
+        canExit: await _contract.canExit(),
+        state: await _contract.state(),
+      };
     }		
   }
 
 
+async function redeem(v) {
+  const tx = await v.contract.redeemETH(v.userBalance);
+  await tx.wait(1);
+
+  v.exitDate = await v.contract.exitDate();
+  v.userBalance = '';
+  v.tokenId = await v.contract.tokenId();
+  v.totalEarns = await v.contract.totalEarns();
+  v.canExit = await v.contract.canExit();
+  v.state = await v.contract.state();
+}
+
 async function exitStake(v) {
-  await v.contract.exitStake();
+  const tx = await v.contract.exitStake();
+  await tx.wait();
+
+  v.exitDate = await v.contract.exitDate();
+  v.userBalance = await v.contract.balanceOf($wallet);
+  v.tokenId = await v.contract.tokenId();
+  v.totalEarns = await v.contract.totalEarns();
+  v.canExit = await v.contract.canExit();
+  v.state = await v.contract.state();
+
 }
 
 function formatDate(d) {
@@ -119,14 +142,22 @@ return `${
                           {Number(Number(formatEther(v.userBalance)).toFixed(6))} ETH
                       </td>
                       <td class="py-4 px-2">
+                        {#if Number(v.state) == 2}
+                          {Number(Number(formatEther(v.totalEarns)).toFixed(6))} ETH
+                        {:else}
                           Pending...
+                        {/if}
                       </td>
                       
                       <td class="py-4 px-2">
                           {#if Number(formatEther(v.userBalance)) == 0}
                             ----
+                          {:else if v.canExit && v.state == 1}
+                            <button on:click={() => { exitStake(v) }} class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Exit Stake</button>
+                          {:else if v.state == 2}
+                            <button on:click={() => { redeem(v) }} class="font-medium text-green-600 dark:text-green-500 hover:underline">Redeem</button>
                           {:else}
-                            <button on:click={() => { exitStake(v) }} class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Claim</button>
+                            Please wait
                           {/if}
                       </td>
                   </tr>
