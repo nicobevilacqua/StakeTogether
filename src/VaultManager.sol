@@ -38,8 +38,6 @@ contract VaultManager {
 
         SafeTransferLib.safeTransferFrom(ERC20(weth), msg.sender, address(this), assetsToDeposit);
 
-        ERC20(weth).approve(address(_nextVault), assetsToDeposit);
-
         _nextVault.deposit(assetsToDeposit, msg.sender);
 
         userVaults[msg.sender].push(address(_nextVault));
@@ -54,10 +52,11 @@ contract VaultManager {
     function _createNextVault() private {
         address _nextVaultAddress = Clones.clone(vaultImplementation);
         _nextVault = Vault(payable(_nextVaultAddress));
-
-        Vault(_nextVault).initialize();
+        Vault(payable(_nextVaultAddress)).initialize();
 
         vaults.push(_nextVaultAddress);
+
+        ERC20(weth).approve(address(_nextVaultAddress), type(uint256).max);
 
         emit VaultCreated(_nextVaultAddress, block.timestamp);
     }
