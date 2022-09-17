@@ -19,11 +19,6 @@ let web3Modal;
 export async function init() {
     _provider = new Web3Provider(window.ethereum, "any");
 
-    window.avanzar = async () => {
-      await _provider.send('anvil_increaseTime', [6 * 30 *24 * 60 * 60]);
-      await _provider.send('anvil_mine', []);
-    }
-
     const __p = _provider;
     if(_provider) {
       const _networkDetails = await _provider.getNetwork();
