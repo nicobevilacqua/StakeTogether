@@ -1,11 +1,36 @@
 <h1 align="center">
   <br>
-  LOGO
+  <img src="https://user-images.githubusercontent.com/12957692/190872812-dd6f2133-4e67-476c-ba04-6b0aa63ecde3.png" height=100 width=100 />
   <br><br>
-  Adminpro - Backend
+  Stake Together
   <br>
 </h1>
-<h4 align="center">Stake Together</h4>
+<h4 align="center">Ganemos rewards colaborando con la descentralización de Ethereum</h4>
+
+## Stake ETH
+
+Hacemos un stake de ETH en un crowfunding para correr un nodo validador y minteamos tokens como comprobante
+
+![Stake](https://user-images.githubusercontent.com/12957692/190873601-6c7e343c-dc9b-4408-84e4-5b3e1308a5cf.jpg)
+
+## Withdraw ETH
+
+Podemos hacer un redeem del ETH antes de que comience el staking period, quemadon los tokens de comprobante y recibiendo el ETH correspondiente.
+
+![Redeeem](https://user-images.githubusercontent.com/12957692/190873901-c5aa3266-099a-462e-9748-b08995ca212c.jpg)
+
+
+## Staking Period
+
+Una vez la última persona completa el faltante para los 32 ETH, se corre el validador y comienza el staking period
+
+![staking period](https://user-images.githubusercontent.com/12957692/190874138-b8d7a35d-8f18-4053-9cf6-cea669b59840.jpg)
+
+## Redeeem
+
+Una vez pasado el staking period las personas pueden hacer claim de los rewards
+
+![My Movie](https://user-images.githubusercontent.com/12957692/190874297-77a5fb2d-798f-4fe8-895c-c7a822a7b8dd.jpg)
 
 
 ## Getting started (frontend)
