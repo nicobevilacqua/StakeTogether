@@ -82,6 +82,14 @@ contract VaultManagerTest is Test {
             vault.convertToAssets(vault.balanceOf(investor1)),
             (36 ether * 10 ether) / 32 ether
         );
+
+        vm.startPrank(investor1);
+        vault.redeemETH(vault.balanceOf(investor1));
+        assertEq(investor1.balance, (36 ether * 10 ether) / 32 ether);
+
+        assertEq(vault.balanceOf(investor1), 0, "should burn all shares");
+
+
     }
 
 
