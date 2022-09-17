@@ -83,4 +83,19 @@ contract VaultManagerTest is Test {
             (36 ether * 10 ether) / 32 ether
         );
     }
+
+
+      function testCreateTwoVaults() public {
+        vm.startPrank(investor1);
+        weth.approve(address(vaultManager), 16 ether);
+        vaultManager.depositToVault(16 ether);
+        vm.stopPrank();
+
+        vm.startPrank(investor2);
+        weth.approve(address(vaultManager), 16 ether);
+        vaultManager.depositToVault(16 ether);
+        vm.stopPrank();
+
+        assertEq(vaultManager.getVaultsLen(), 2);
+    }
 }

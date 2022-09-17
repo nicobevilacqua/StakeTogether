@@ -42,7 +42,7 @@ contract VaultManager {
 
         userVaults[msg.sender].push(address(_nextVault));
 
-        if (_nextVault.totalAssets() == VAULT_AMOUNT) {
+        if (_nextVault.totalSupply() == VAULT_AMOUNT) {
             _createNextVault();
         }
 
@@ -63,5 +63,9 @@ contract VaultManager {
 
     function getUserVaults() public view returns (address[] memory) {
         return userVaults[msg.sender];
+    }
+
+    function getVaultsLen() public view returns (uint256) {
+        return vaults.length;
     }
 }
