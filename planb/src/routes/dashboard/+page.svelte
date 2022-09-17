@@ -35,13 +35,18 @@
   }
 
 
+async function exitStake(v) {
+  await v.contract.exitStake();
+}
+
 function formatDate(d) {
+  
   const dt = new Date(d *1000);
 const padL = (nr, len = 2, chr = `0`) => `${nr}`.padStart(2, chr);
 
 return `${
-    padL(dt.getMonth()+1)}/${
     padL(dt.getDate())}/${
+    padL(dt.getMonth()+1)}/${
     dt.getFullYear()} ${
     padL(dt.getHours())}:${
     padL(dt.getMinutes())}:${
@@ -121,7 +126,7 @@ return `${
                           {#if Number(formatEther(v.userBalance)) == 0}
                             ----
                           {:else}
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Claim</a>
+                            <button on:click={() => { exitStake(v) }} class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Claim</button>
                           {/if}
                       </td>
                   </tr>
