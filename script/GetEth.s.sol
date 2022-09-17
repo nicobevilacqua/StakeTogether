@@ -19,7 +19,7 @@ contract GetEthScript is Script {
 
         console2.log("sending", amount, "ether to", wallet);
 
-        payable(wallet).transfer(amount);
+        payable(wallet).transfer(amount * 1 ether);
 
         vm.stopBroadcast();
     }
