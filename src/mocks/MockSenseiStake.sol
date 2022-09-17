@@ -20,7 +20,7 @@ contract MockSenseiStake is ERC721, Ownable {
         }
         // around 6 months
         exitDate[tokenId] = block.timestamp + 30 days * 6;
-        balance[tokenId] = 32 ether;
+        balance[tokenId] += 32 ether;
 
         _safeMint(msg.sender, tokenId);
 
@@ -33,7 +33,7 @@ contract MockSenseiStake is ERC721, Ownable {
 
     function exitStake(uint256 tokenId) external {
         require(ownerOf(tokenId) == msg.sender, "!owner of vault");
-        require(exitDate[tokenId] >= block.timestamp, "cant exit yet");
+        require(exitDate[tokenId] <= block.timestamp, "cant exit yet");
         _burn(tokenId);
         uint256 bal = balance[tokenId];
         delete (balance[tokenId]);
