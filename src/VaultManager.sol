@@ -12,7 +12,7 @@ import {ISenseiStake} from "./ISenseiStake.sol";
 contract VaultManager {
     uint256 public constant VAULT_AMOUNT = 32 ether;
     address public immutable vaultImplementation;
-    address public weth;
+    address public immutable weth;
 
     Vault internal _nextVault;
 
