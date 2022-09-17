@@ -9,13 +9,14 @@ import Dashboard from './views/Dashboard';
 import WalletContext from './context/WalletContext';
 
 import detectEthereumProvider from '@metamask/detect-provider';
+import { ethers } from 'ethers';
 const { ethereum } = window as any;
 
 import { getProvider } from './utils/wallet';
 
 const App = () => {
   const [metamask, setMetamask] = useState<boolean | null>(null);
-  const [network, setNetwork] = useState<number | null>(null);
+  const [network, setNetwork] = useState<any | null>(null);
   const [address, setAddress] = useState<string | null>(null);
 
   const context = {
@@ -35,7 +36,7 @@ const App = () => {
       return;
     }
 
-    setNetwork(parseInt(ethereum.networkVersion, 10));
+    setNetwork(ethers.providers.getNetwork(parseInt(ethereum.networkVersion, 10)));
 
     const [_address] = await ethereum.request({
       method: 'eth_accounts',

@@ -11,11 +11,12 @@ import { useNavigate } from 'react-router-dom';
 import WalletContext from '../context/WalletContext';
 
 import ConnectButton from './ConnectButton';
+import SwitchNetworkButton from './SwitchNetworkButton';
 
 export default function Header() {
   const navigate = useNavigate();
 
-  const { address } = useContext(WalletContext);
+  const { address, network } = useContext(WalletContext);
 
   return (
     <div className="header">
@@ -49,7 +50,13 @@ export default function Header() {
             </div>
           </Grid>
           <Grid item xs={4}>
-            {address ? <span>{address}</span> : <ConnectButton />}
+            {network && network.chainId !== 1337 ? (
+              <SwitchNetworkButton />
+            ) : address ? (
+              <span>{address}</span>
+            ) : (
+              <ConnectButton />
+            )}
           </Grid>
         </Grid>
       </Container>
