@@ -3,7 +3,6 @@ pragma solidity ^0.8.13;
 
 import "forge-std/Script.sol";
 
-
 import {WETH} from "solmate/tokens/WETH.sol";
 import {MockSenseiStake} from "../src/mocks/MockSenseiStake.sol";
 import {VaultManager} from "../src/VaultManager.sol";
@@ -22,7 +21,7 @@ contract DepositScript is Script {
     function run() public {
         vm.startBroadcast();
 
-        (bool sent, ) = payable(weth).call{value: amount}("");
+        (bool sent, ) = payable(weth).call{value: amount * 1 ether}("");
         require(sent, "weth wrapping failed");
 
         weth.approve(address(vaultManager), amount);

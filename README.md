@@ -49,3 +49,10 @@ $ yarn start
 <img width="400" style="margin: 10px auto;" src="./images/metamask.png" />
 
 5. Switch network to localhost on metamask.
+
+
+## Get some ETH locally
+Call this script with your metamask wallet address
+```sh
+  WALLET=*|your wallet here|* AMOUNT=*|amount in eth|* forge script ./script/GetEth.s.sol --rpc-url http://127.0.0.1:8545 --private-key 0x2a871d0798f97d79848a013d4936a73bf4cc922c825d33c1cf7073dff6d409c6 --broadcast
+```
