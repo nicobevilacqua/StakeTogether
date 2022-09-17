@@ -2,6 +2,7 @@ import * as React from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Typography } from '@mui/material';
 import BoltIcon from '@mui/icons-material/Bolt';
 import GradeIcon from '@mui/icons-material/Grade';
@@ -43,6 +44,7 @@ export default function Header() {
             </div>
           </Grid>
           <Grid item xs={4}>
+            <ConnectButton />
             <Address />
           </Grid>
         </Grid>

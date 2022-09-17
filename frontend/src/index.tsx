@@ -8,18 +8,44 @@ import './index.css';
 import Withdraw from './views/Withdraw';
 import Dashboard from './views/Dashboard';
 
+import '@rainbow-me/rainbowkit/styles.css';
+import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import { chain, configureChains, createClient, WagmiConfig } from 'wagmi';
+import { alchemyProvider } from 'wagmi/providers/alchemy';
+import { publicProvider } from 'wagmi/providers/public';
+
+const { chains, provider } = configureChains(
+  [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
+  [alchemyProvider(), publicProvider()]
+);
+
+const { connectors } = getDefaultWallets({
+  appName: 'My RainbowKit App',
+  chains,
+});
+
+const wagmiClient = createClient({
+  autoConnect: true,
+  connectors,
+  provider,
+});
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <StrictMode>
-    <Suspense>
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="withdraw" element={<Withdraw />} />
-          <Route path="dashboard" element={<Dashboard />} />
-        </Routes>
-      </HashRouter>
-    </Suspense>
+    <WagmiConfig client={wagmiClient}>
+      <RainbowKitProvider chains={chains}>
+        <Suspense>
+          <HashRouter>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="withdraw" element={<Withdraw />} />
+              <Route path="dashboard" element={<Dashboard />} />
+            </Routes>
+          </HashRouter>
+        </Suspense>
+      </RainbowKitProvider>
+    </WagmiConfig>
   </StrictMode>
 );
 
