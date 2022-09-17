@@ -40,6 +40,7 @@
 async function redeem(v) {
   const tx = await v.contract.redeemETH(v.userBalance);
   await tx.wait(1);
+  document.location.reload();
 
   v.exitDate = await v.contract.exitDate();
   v.userBalance = '';
@@ -51,7 +52,9 @@ async function redeem(v) {
 
 async function exitStake(v) {
   const tx = await v.contract.exitStake();
-  await tx.wait();
+  await tx.wait(1);
+  document.location.reload();
+
 
   v.exitDate = await v.contract.exitDate();
   v.userBalance = await v.contract.balanceOf($wallet);
