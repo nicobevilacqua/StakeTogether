@@ -5,6 +5,7 @@ import {Vault} from "./Vault.sol";
 import {Clones} from "@openzeppelin/contracts/proxy/Clones.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 import {ERC20} from "solmate/tokens/ERC20.sol";
+import {WETH} from "solmate/tokens/WETH.sol";
 import {SafeTransferLib} from "solmate/utils/SafeTransferLib.sol";
 import {ISenseiStake} from "./ISenseiStake.sol";
 // import "forge-std/console2.sol";
@@ -27,6 +28,26 @@ contract VaultManager {
         weth = _weth;
         vaultImplementation = address(new Vault(_stake, VAULT_AMOUNT, _weth));
         _createNextVault();
+    }
+
+    /// @dev me armo esta funcion para acelerar el front end no se enoje nicolas
+    function depositToVault() public payable{
+        require(msg.value > 0, "insufficient funds");
+        WETH(payable(weth)).deposit{value: msg.value}();
+
+        uint256 vaultTotalAssets = _nextVault.totalAssets();
+
+        uint256 assetsToDeposit = Math.min(VAULT_AMOUNT - vaultTotalAssets, msg.value);
+
+        _nextVault.deposit(assetsToDeposit, msg.sender);
+
+        userVaults[msg.sender].push(address(_nextVault));
+
+        if (_nextVault.totalSupply() == VAULT_AMOUNT) {
+            _createNextVault();
+        }
+
+        emit FundsAdded(msg.sender, assetsToDeposit, block.timestamp);
     }
 
     function depositToVault(uint256 _amount) public {
