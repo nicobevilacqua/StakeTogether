@@ -21,12 +21,14 @@ contract DepositScript is Script {
     function run() public {
         vm.startBroadcast();
 
-        (bool sent, ) = payable(weth).call{value: amount * 1 ether}("");
+        uint256 amountETH = amount * 1 ether;
+
+        (bool sent, ) = payable(weth).call{value: amountETH}("");
         require(sent, "weth wrapping failed");
 
-        weth.approve(address(vaultManager), amount);
+        weth.approve(address(vaultManager), amountETH);
 
-        vaultManager.depositToVault(amount);
+        vaultManager.depositToVault(amountETH);
 
         vm.stopBroadcast();
     }
