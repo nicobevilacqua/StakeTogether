@@ -1,16 +1,22 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+// import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Typography } from '@mui/material';
 import BoltIcon from '@mui/icons-material/Bolt';
 import GradeIcon from '@mui/icons-material/Grade';
 import LaptopIcon from '@mui/icons-material/Laptop';
 import { useNavigate } from 'react-router-dom';
+import WalletContext from '../context/WalletContext';
+
+import ConnectButton from './ConnectButton';
 
 export default function Header() {
   const navigate = useNavigate();
+
+  const { address } = useContext(WalletContext);
+
   return (
     <div className="header">
       <Container maxWidth="lg">
@@ -43,7 +49,7 @@ export default function Header() {
             </div>
           </Grid>
           <Grid item xs={4}>
-            <ConnectButton />
+            {address ? <span>{address}</span> : <ConnectButton />}
           </Grid>
         </Grid>
       </Container>
