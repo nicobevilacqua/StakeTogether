@@ -7,6 +7,18 @@
 </h1>
 <h4 align="center">Ganemos rewards colaborando con la descentralización de Ethereum</h4>
 
+## Stake ETH
+
+Hacemos un stake de ETH en un crowfunding para correr un nodo validador y minteamos tokens como comprobante
+
+![Stake](https://user-images.githubusercontent.com/12957692/190873601-6c7e343c-dc9b-4408-84e4-5b3e1308a5cf.jpg)
+
+## Redeem ETH
+
+Podemos hacer un redeem del ETH antes de que comience el staking period, quemadon los tokens de comprobante y recibiendo el ETH correspondiente.
+
+![Redeeem](https://user-images.githubusercontent.com/12957692/190873901-c5aa3266-099a-462e-9748-b08995ca212c.jpg)
+
 
 ## Getting started (frontend)
 
