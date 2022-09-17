@@ -11,6 +11,10 @@
 
 #### ℹ️ El frontend está en la carpeta **planb**
 
+## Pitch Deck
+
+https://www.canva.com/design/DAFMc9Ykgzc/XCcbeQfYMIRCbQvqR4_Maw/view
+
 ## Stake ETH
 
 Hacemos un stake de ETH en un crowfunding para correr un nodo validador y minteamos tokens como comprobante
