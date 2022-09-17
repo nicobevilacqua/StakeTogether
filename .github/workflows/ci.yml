@@ -1,0 +1,41 @@
+name: "CI"
+
+env:
+  FOUNDRY_PROFILE: "ci"
+
+on:
+  pull_request:
+    branches:
+      - "main"
+  push:
+    branches:
+      - "main"
+
+jobs:
+  ci:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Check out the repo"
+        uses: "actions/checkout@v3"
+        with:
+          submodules: "recursive"
+
+      - name: "Install Foundry"
+        uses: "onbjerg/foundry-toolchain@v1"
+        with:
+          version: "nightly"
+
+      - name: "Show the Foundry config"
+        run: "forge config"
+
+      - name: "Run the tests"
+        run: "forge test"
+
+      - name: "Build the contracts"
+        run: |
+          forge --version
+          forge build --sizes
+      - name: "Add test summary"
+        run: |
+          echo "## Tests" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Passed" >> $GITHUB_STEP_SUMMARY

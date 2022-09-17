@@ -31,7 +31,7 @@ contract VaultManagerTest is Test {
 
         weth = new WETH();
 
-        vm.deal(address(weth), 100000 ether);
+        weth.deposit{value: 100000 ether}();
 
         deal(address(weth), investor1, 1000 ether);
         deal(address(weth), investor2, 1000 ether);
@@ -43,35 +43,7 @@ contract VaultManagerTest is Test {
         vaultManager = new VaultManager(address(senseiStake), address(weth));
     }
 
-    function testFuzz(uint256 _amount) public {
-        VaultManager _vaultManager = new VaultManager(address(senseiStake), address(weth));
-
-        address investor = makeAddr("investor");
-        deal(address(weth), investor, _amount);
-
-        vm.startPrank(investor);
-
-        weth.approve(address(_vaultManager), _amount);
-
-        if (_amount == 0) {
-            vm.expectRevert("insufficient funds");
-        }
-        _vaultManager.depositToVault(_amount);
-
-        if (_amount == 0) {
-            // termina aca si no manda ether
-            return;
-        }
-
-        address[] memory vaults = _vaultManager.getUserVaults();
-        Vault vault = Vault(payable(vaults[0]));
-
-        vm.stopPrank();
-
-        assertEq(vault.balanceOf(investor) + weth.balanceOf(investor), _amount, "investor balance");
-    }
-
-    function testCreateNewVault() public {
+    function testCreateOneVault() public {
         vm.startPrank(investor1);
         weth.approve(address(vaultManager), 10 ether);
         vaultManager.depositToVault(10 ether);
@@ -96,9 +68,44 @@ contract VaultManagerTest is Test {
         address vaultAddress = vaults[0];
         Vault vault = Vault(payable(vaults[0]));
 
-        assertEq(vault.balanceOf(investor1), 10 ether, "investor1 balance");
-        assertEq(vault.balanceOf(investor2), 10 ether, "investor2 balance");
-        assertEq(vault.balanceOf(investor3), 10 ether, "investor3 balance");
-        assertEq(vault.balanceOf(investor4), 2 ether, "investor4 balance");
+        assertEq(senseiStake.balanceOf(vaultAddress), 1);
+        assertEq(senseiStake.ownerOf(0), vaultAddress, "No es el owner del nft");
+
+        // avanzo 6 meses para que se libere la guita
+        vm.warp(block.timestamp + 30 days * 6);
+        senseiStake.addRewards{value: 4 ether}(0);
+        // cualquiera puede llamar esta funcion
+        vault.exitStake();
+
+        assertGt(vault.convertToAssets(vault.balanceOf(investor1)), 10 ether);
+        assertEq(
+            vault.convertToAssets(vault.balanceOf(investor1)),
+            (36 ether * 10 ether) / 32 ether
+        );
+
+        vm.startPrank(investor1);
+        vault.redeemETH(vault.balanceOf(investor1));
+        assertEq(investor1.balance, (36 ether * 10 ether) / 32 ether);
+
+        assertEq(vault.balanceOf(investor1), 0, "should burn all shares");
+
+        assertEq(vault.totalEarns(), 36 ether);
+
+
+    }
+
+
+      function testCreateTwoVaults() public {
+        vm.startPrank(investor1);
+        weth.approve(address(vaultManager), 16 ether);
+        vaultManager.depositToVault(16 ether);
+        vm.stopPrank();
+
+        vm.startPrank(investor2);
+        weth.approve(address(vaultManager), 16 ether);
+        vaultManager.depositToVault(16 ether);
+        vm.stopPrank();
+
+        assertEq(vaultManager.getVaultsLen(), 2);
     }
 }

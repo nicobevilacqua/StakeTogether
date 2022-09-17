@@ -2,71 +2,91 @@
 pragma solidity ^0.8.13;
 
 import {Vault} from "./Vault.sol";
-import {Counters} from "@openzeppelin/contracts/utils/Counters.sol";
 import {Clones} from "@openzeppelin/contracts/proxy/Clones.sol";
-
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
-import {Address} from "@openzeppelin/contracts/utils/Address.sol";
+import {ERC20} from "solmate/tokens/ERC20.sol";
+import {WETH} from "solmate/tokens/WETH.sol";
+import {SafeTransferLib} from "solmate/utils/SafeTransferLib.sol";
+import {ISenseiStake} from "./ISenseiStake.sol";
+// import "forge-std/console2.sol";
 
 contract VaultManager {
-    using Counters for Counters.Counter;
-    Counters.Counter internal _vaultId;
-
     uint256 public constant VAULT_AMOUNT = 32 ether;
     address public immutable vaultImplementation;
+    address public immutable weth;
 
-    address internal _nextVault;
+    Vault internal _nextVault;
 
-    mapping(address => uint256[]) public userVaults;
-    mapping(uint256 => address) public vaultAddress;
+    mapping(address => address[]) public userVaults;
+
+    address[] public vaults;
 
     event FundsAdded(address indexed user, uint256 amount, uint256 timestamp);
     event VaultCreated(address indexed vault, uint256 timestamp);
 
-    constructor() {
-        vaultImplementation = address(new Vault(VAULT_AMOUNT));
+    constructor(address _stake, address _weth) {
+        weth = _weth;
+        vaultImplementation = address(new Vault(_stake, VAULT_AMOUNT, _weth));
         _createNextVault();
     }
 
-    function addFunds() external payable {
+    /// @dev me armo esta funcion para acelerar el front end no se enoje nicolas
+    function depositToVault() public payable{
         require(msg.value > 0, "insufficient funds");
+        WETH(payable(weth)).deposit{value: msg.value}();
 
-        Vault nextVault = Vault(_nextVault);
+        uint256 vaultTotalAssets = _nextVault.totalAssets();
 
-        uint256 currentVaultAmount = nextVault.totalSupply();
+        uint256 assetsToDeposit = Math.min(VAULT_AMOUNT - vaultTotalAssets, msg.value);
 
-        uint256 userPendingFunds = msg.value;
+        _nextVault.deposit(assetsToDeposit, msg.sender);
 
-        while (userPendingFunds > 0) {
-            uint256 nextVaultInvestmentAmount = Math.min(
-                VAULT_AMOUNT - currentVaultAmount,
-                userPendingFunds
-            );
+        userVaults[msg.sender].push(address(_nextVault));
 
-            nextVault.addFunds{value: nextVaultInvestmentAmount}(msg.sender);
-
-            userVaults[msg.sender].push(nextVault.vaultId());
-
-            userPendingFunds -= nextVaultInvestmentAmount;
-
-            if (nextVaultInvestmentAmount != userPendingFunds) {
-                _createNextVault();
-            }
+        if (_nextVault.totalSupply() == VAULT_AMOUNT) {
+            _createNextVault();
         }
 
-        emit FundsAdded(msg.sender, msg.value, block.timestamp);
+        emit FundsAdded(msg.sender, assetsToDeposit, block.timestamp);
+    }
+
+    function depositToVault(uint256 _amount) public {
+        require(_amount > 0, "insufficient funds");
+
+        uint256 vaultTotalAssets = _nextVault.totalAssets();
+
+        uint256 assetsToDeposit = Math.min(VAULT_AMOUNT - vaultTotalAssets, _amount);
+
+        SafeTransferLib.safeTransferFrom(ERC20(weth), msg.sender, address(this), assetsToDeposit);
+
+        _nextVault.deposit(assetsToDeposit, msg.sender);
+
+        userVaults[msg.sender].push(address(_nextVault));
+
+        if (_nextVault.totalSupply() == VAULT_AMOUNT) {
+            _createNextVault();
+        }
+
+        emit FundsAdded(msg.sender, assetsToDeposit, block.timestamp);
     }
 
     function _createNextVault() private {
-        _nextVault = Clones.clone(vaultImplementation);
+        address _nextVaultAddress = Clones.clone(vaultImplementation);
+        _nextVault = Vault(payable(_nextVaultAddress));
+        Vault(payable(_nextVaultAddress)).initialize();
 
-        uint256 vaultId = _vaultId.current();
-        _vaultId.increment();
+        vaults.push(_nextVaultAddress);
 
-        Vault(_nextVault).initialize(vaultId);
+        ERC20(weth).approve(address(_nextVaultAddress), type(uint256).max);
 
-        vaultAddress[vaultId] = _nextVault;
+        emit VaultCreated(_nextVaultAddress, block.timestamp);
+    }
 
-        emit VaultCreated(_nextVault, block.timestamp);
+    function getUserVaults() public view returns (address[] memory) {
+        return userVaults[msg.sender];
+    }
+
+    function getVaultsLen() public view returns (uint256) {
+        return vaults.length;
     }
 }
