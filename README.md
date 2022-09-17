@@ -7,6 +7,10 @@
 </h1>
 <h4 align="center">Ganemos rewards colaborando con la descentralización de Ethereum</h4>
 
+## Frontend
+
+#### ℹ️ El frontend está en la carpeta **planb**
+
 ## Stake ETH
 
 Hacemos un stake de ETH en un crowfunding para correr un nodo validador y minteamos tokens como comprobante
