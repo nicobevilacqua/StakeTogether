@@ -7,6 +7,10 @@
 </h1>
 <h4 align="center">Ganemos rewards colaborando con la descentralización de Ethereum</h4>
 
+## Contributors
+
+<img src="https://contrib.rocks/image?repo=nicobevilacqua/StakeTogether-BearBuildersHackathon"/>
+
 ## Frontend
 
 #### ℹ️ El frontend está en la carpeta **planb**
