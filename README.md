@@ -11,4 +11,4 @@
 
 Most Ethereum nodes are in the United States and Europe [¹](https://ethernodes.org/countries) [²](https://bitnodes.io/), even the ones run by decentralized protocols like Lido Finance[³](https://lido.fi/scorecard) and RocketPool[⁴](https://stake.rocketpool.net/network).
 
-This represents a serious challenge for the **geographical decentralization of the network**. [⁵](https://www.bloomberg.com/news/articles/2022-09-20/sec-suit-hints-at-case-for-us-jurisdiction-over-ethereum-network) [⁶](https://cointelegraph.com/news/sec-lawsuit-claims-jurisdiction-as-eth-nodes-are-clustered-in-the-us)
+That represents a serious challenge for the **geographical decentralization of the network**. [⁵](https://www.bloomberg.com/news/articles/2022-09-20/sec-suit-hints-at-case-for-us-jurisdiction-over-ethereum-network) [⁶](https://cointelegraph.com/news/sec-lawsuit-claims-jurisdiction-as-eth-nodes-are-clustered-in-the-us)
