@@ -93,7 +93,6 @@ contract VaultManagerTest is Test {
         address[] memory vaults = vaultManager.getUserVaults();
         vm.stopPrank();
 
-        address vaultAddress = vaults[0];
         Vault vault = Vault(payable(vaults[0]));
 
         assertEq(vault.balanceOf(investor1), 10 ether, "investor1 balance");
