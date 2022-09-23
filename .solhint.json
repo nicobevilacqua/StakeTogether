@@ -5,6 +5,7 @@
     "quotes": ["warn"],
     "not-rely-on-time": 0,
     "func-visibility": ["warn", { "ignoreConstructors": true }],
-    "no-empty-blocks": 0
+    "no-empty-blocks": 0,
+    "avoid-low-level-calls": 0
   }
 }

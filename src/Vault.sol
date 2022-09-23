@@ -5,7 +5,6 @@ import {Initializable} from "@openzeppelin/contracts/proxy/utils/Initializable.s
 import {ERC20} from "solmate/tokens/ERC20.sol";
 import {ERC4626} from "solmate/mixins/ERC4626.sol";
 import {WETH} from "solmate/tokens/WETH.sol";
-
 import {ISenseiStake} from "./ISenseiStake.sol";
 import {IERC721Receiver} from "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 
@@ -69,9 +68,7 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
         }
     }
 
-    function redeemETH(
-        uint256 assets
-    ) external {
+    function redeemETH(uint256 assets) external {
         WETH _weth = WETH(payable(address(asset)));
         uint256 _earn = previewRedeem(assets);
         redeem(assets, address(this), msg.sender);
