@@ -8,9 +8,20 @@ import {WETH} from "solmate/tokens/WETH.sol";
 import {ISenseiStake} from "./ISenseiStake.sol";
 import {IERC721Receiver} from "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 
+/**
+ * @title Vault instance
+ * @author StakeTogether
+ * @dev Contract created every time `VAULT_AMOUNT` is reached by `VaultManager`
+ */
 contract Vault is ERC4626, Initializable, IERC721Receiver {
+    /**
+     * @dev reference to SenseiNode contract
+     */
     ISenseiStake public immutable stake;
 
+    /**
+     * @dev Max amount of weth to be transfered to the vault
+     */
     uint256 public immutable VAULT_AMOUNT;
 
     uint256 public tokenId;
