@@ -14,8 +14,6 @@ contract VaultManagerTest is Test {
     address private investor2;
     address private investor3;
     address private investor4;
-    address private investor5;
-    address private investor6;
 
     WETH private weth;
 
