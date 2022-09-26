@@ -90,10 +90,12 @@ contract VaultManager {
         emit FundsAdded(msg.sender, _amount, block.timestamp);
     }
 
-    /// @notice Function that returns if `msg.sender` already has `_vault` in his vaults list
-    /// @dev Function that returns if `msg.sender` already has `_vault` in his vaults list
-    /// @param _vault - The vault address
-    /// @return bool - If `_vault` is already an user's vault
+    /**
+     * @notice Function that returns if `msg.sender` already has `_vault` in his vaults list
+     * @dev Function that returns if `msg.sender` already has `_vault` in his vaults list
+     * @param _vault - The vault address
+     * @return bool - If `_vault` is already an user's vault
+     */
     function _isUserVault(address _vault) private view returns (bool) {
         uint256 userVaultsLength = userVaults[msg.sender].length;
         for(uint256 i = 0; i < userVaultsLength;) {
