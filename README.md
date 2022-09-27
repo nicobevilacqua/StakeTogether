@@ -24,3 +24,17 @@ That represents a serious challenge for the **geographical decentralization of t
 <a href="https://www.canva.com/design/DAFMc9Ykgzc/XCcbeQfYMIRCbQvqR4_Maw/view"><img width="824" alt="Screen Shot 2022-09-26 at 22 30 40" src="https://user-images.githubusercontent.com/12957692/192410439-1d1376d8-c237-456b-9855-621c7a9c780e.png"><a/>
 
 [Stake Together Presentation](https://www.canva.com/design/DAFMc9Ykgzc/XCcbeQfYMIRCbQvqR4_Maw/view)
+
+## How to Run
+
+### Frontend 
+
+Frontend instructions are in the [frontend](https://github.com/nicobevilacqua/StakeTogether/tree/main/frontend) directory
+
+### Contracts
+
+Contracts are in the [src](https://github.com/nicobevilacqua/StakeTogether/tree/main/src) directory
+
+## State of the Project
+
+The project has been conceived for the [Bear Builders Hackathon](http://bear.builders/) on September 2022. It is currently a prototype to demonstrate the main functionalities of the project
