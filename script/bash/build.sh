@@ -1,8 +1,7 @@
 #!/bin/bash
 
-source ../../.env;
+source .env;
 
-cd ../..;
 forge build --extra-output-files abi
 cp -R out/Vault.sol frontend/src/abi/
 
