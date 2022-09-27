@@ -41,10 +41,15 @@ contract CreateMultipleVaultsTest is Test {
         }
 
         uint256 expectedUserVaultsAmount = _deposit / VAULT_AMOUNT;
+        // edge case
         if (_deposit % VAULT_AMOUNT > 0) {
-          expectedUserVaultsAmount++;
+            expectedUserVaultsAmount++;
         }
         uint256 expectedTotalVaultsAmount = expectedUserVaultsAmount;
+        // edge case
+        if (_deposit % VAULT_AMOUNT == 0) {
+            expectedTotalVaultsAmount++;
+        }
 
         vm.startPrank(investor1);
         weth.approve(address(vaultManager), _deposit);
