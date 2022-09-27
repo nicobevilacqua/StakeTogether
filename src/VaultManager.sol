@@ -21,7 +21,7 @@ contract VaultManager {
     address public immutable vaultImplementation;
 
     /// @notice The weth contract address
-    ERC20 public immutable weth;
+    WETH public immutable weth;
 
     /// @notice The vault that is being funded currently (until `VAULT_AMOUNT` is reached)
     Vault internal _nextVault;
@@ -44,13 +44,13 @@ contract VaultManager {
 
     /// Constructor
     constructor(address _stake, address _weth) {
-        weth = ERC20(_weth);
+        weth = WETH(payable(_weth));
         vaultImplementation = address(new Vault(_stake, VAULT_AMOUNT, _weth));
         _createNextVault();
     }
 
     /**
-     * @dev Deposit ether to the found, create a new vault if VAULT_AMOUNT is reached, mint tokens to the user as a transfer receipt
+     * @dev Deposit WETH to the found, create a new vault if VAULT_AMOUNT is reached, mint tokens to the user as a transfer receipt
      * @param _amount - amount of weth to be transfered from `msg.sender` to the contract
      * @notice only the needed weth is deposited
      * @notice weth should be allowed to be transfered to the contract first
@@ -59,11 +59,31 @@ contract VaultManager {
      *
      * Emits a {FundsAdded} event.
      */
-    function depositToVault(uint256 _amount) public {
+    function depositToVault(uint256 _amount) external {
         require(_amount > 0, "insufficient funds");
 
         SafeTransferLib.safeTransferFrom(weth, msg.sender, address(this), _amount);
 
+        _depositToVault(_amount);
+    }
+
+    /**
+     * @dev Deposit ETH to the found, create a new vault if VAULT_AMOUNT is reached, mint tokens to the user as a transfer receipt
+     * @notice msg.value will be wrapped into weth
+     *
+     * May create a new vault instance if `VAULT_AMOUNT` is reached.
+     *
+     * Emits a {FundsAdded} event.
+     */
+    function depositToVault() public payable {
+        require(msg.value > 0, "insufficient funds");
+
+        weth.deposit{value: msg.value}();
+
+        _depositToVault(msg.value);
+    }
+
+    function _depositToVault(uint256 _amount) private {
         uint256 pendingFunds = _amount;
 
         while (pendingFunds > 0) {
