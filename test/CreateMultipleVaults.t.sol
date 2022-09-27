@@ -37,7 +37,7 @@ contract CreateMultipleVaultsTest is Test {
 
     function testCreateMultipleVaults(uint256 _deposit) public {
         if (_deposit == 0 || _deposit > 1000 ether) {
-          return;
+            return;
         }
 
         uint256 expectedUserVaultsAmount = _deposit / VAULT_AMOUNT;

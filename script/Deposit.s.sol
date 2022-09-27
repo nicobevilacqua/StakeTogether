@@ -23,7 +23,7 @@ contract DepositScript is Script {
 
         uint256 amountETH = amount * 1 ether;
 
-        (bool sent, ) = payable(weth).call{value: amountETH}("");
+        (bool sent,) = payable(weth).call{value: amountETH}("");
         require(sent, "weth wrapping failed");
 
         weth.approve(address(vaultManager), amountETH);

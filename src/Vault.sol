@@ -29,21 +29,21 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
     /**
      * @notice Vault's ERC721 tokenId minted after the vault is created on SenseiNode
      * @dev Vault's ERC721 tokenId minted after the vault is created on SenseiNode
-     */ 
+     */
     uint256 public tokenId;
 
     /**
      * @notice Total ether transfered by SenseiNode after the node is destroyed
      * @dev Total ether transfered by SenseiNode after the node is destroyed
-     */ 
+     */
     uint256 public totalEarns;
 
     /**
      * @notice Vault current state
      * @dev Vault current state
-     */ 
+     */
     CurrentState public state;
-    
+
     /**
      * @notice Contract possible states
      * @dev Contract possible states
@@ -61,11 +61,9 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
      * @param _vaultAmount - Max eth amount needed in order to create the vault
      * @param _weth - Weth contract address
      */
-    constructor(
-        address _stake,
-        uint256 _vaultAmount,
-        address _weth
-    ) ERC4626(ERC20(_weth), "StakeTogetherToken", "STT") {
+    constructor(address _stake, uint256 _vaultAmount, address _weth)
+        ERC4626(ERC20(_weth), "StakeTogetherToken", "STT")
+    {
         require(_vaultAmount > 0, "Invalid vaultAmount");
 
         vaultAmount = _vaultAmount;
@@ -122,7 +120,7 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
     /**
      * @notice Verifies that deposits can be made and creates a vault on SenseiNode if weth amount neede was reached
      * @dev Verifies that deposits can be made and creates a vault on SenseiNode if weth amount neede was reached
-     */ 
+     */
     function afterDeposit(uint256, uint256) internal override {
         require(state == CurrentState.FUNDING, "cant deposit");
 
@@ -137,53 +135,43 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
     /**
      * @notice Get weth burning STT tokens
      * @dev Get weth burning STT tokens
-     * @param assets Assets to be redeemed
-     */ 
-    function redeemETH(uint256 assets) external {
+     * @param _assets Assets to be redeemed
+     */
+    function redeemETH(uint256 _assets) external {
         WETH _weth = WETH(payable(address(asset)));
-        uint256 _earn = previewRedeem(assets);
-        redeem(assets, address(this), msg.sender);
+        uint256 _earn = previewRedeem(_assets);
+        redeem(_assets, address(this), msg.sender);
         _weth.withdraw(_earn);
-        (bool sent, ) = address(msg.sender).call{value: _earn}("");
+        (bool sent,) = address(msg.sender).call{value: _earn}("");
         require(sent, "send failed");
     }
 
     /**
      * @notice Eth can be withdrawn only if the vault has been unlocked or the vault has not been created yet
      * @dev Eth can be withdrawn only if the vault has been unlocked or the vault has not been created yet
-     */ 
-    function beforeWithdraw(
-        address,
-        address,
-        address,
-        uint256,
-        uint256
-    ) internal view {
+     */
+    function beforeWithdraw(address, address, address, uint256, uint256) internal view {
         require(state == CurrentState.FUNDING || state == CurrentState.FINISHED, "vault locked");
     }
 
     /**
      * @notice Removes the tokens from the node and gets the rewards from SenseiNode
      * @dev Removes the tokens from the node and gets the rewards from SenseiNode, wraps the eth
-     */ 
+     */
     function exitStake() external {
+        require(canExit(), "node not finish");
         state = CurrentState.FINISHED;
         stake.exitStake(tokenId);
         totalEarns = address(this).balance;
-        (bool sent, ) = address(asset).call{value: address(this).balance}("");
+        (bool sent,) = address(asset).call{value: address(this).balance}("");
         require(sent, "send failed");
     }
 
-    /** 
+    /**
      * @notice Function called after the vault is created and the ERC721 token is transfered
      * @dev Function called after the vault is created and the ERC721 token is transfered https://docs.openzeppelin.com/contracts/3.x/api/token/erc721#IERC721Receiver-onERC721Received-address-address-uint256-bytes-
-     */ 
-    function onERC721Received(
-        address,
-        address,
-        uint256,
-        bytes calldata
-    ) external pure returns (bytes4) {
+     */
+    function onERC721Received(address, address, uint256, bytes calldata) external pure returns (bytes4) {
         return IERC721Receiver.onERC721Received.selector;
     }
 
@@ -200,8 +188,8 @@ contract Vault is ERC4626, Initializable, IERC721Receiver {
      * @notice Returns if the exit date has been reached and the tokens can be redeemed
      * @dev Returns if the exit date has been reached and the tokens can be redeemed
      * @return canExit
-     */ 
-    function canExit() external view returns (bool) {
+     */
+    function canExit() public view returns (bool) {
         return stake.exitDate(tokenId) < block.timestamp;
     }
 }

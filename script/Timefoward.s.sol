@@ -22,7 +22,7 @@ contract DepositScript is Script {
     function run() public {
         vm.startBroadcast();
         vm.warp(block.timestamp + 30 days * 6);
-/*
+        /*
         uint256 amountETH = amount * 1 ether;
 
         (bool sent, ) = payable(weth).call{value: amountETH}("");

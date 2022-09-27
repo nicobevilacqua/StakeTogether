@@ -70,7 +70,7 @@ contract VaultManager {
             uint256 vaultTotalAssets = _nextVault.totalAssets();
 
             /**
-                Get just the required weth to fullfill the current vault
+             * Get just the required weth to fullfill the current vault
              */
             uint256 assetsToDeposit = Math.min(VAULT_AMOUNT - vaultTotalAssets, pendingFunds);
 
@@ -98,7 +98,7 @@ contract VaultManager {
      */
     function _isUserVault(address _vault) private view returns (bool) {
         uint256 userVaultsLength = userVaults[msg.sender].length;
-        for(uint256 i = 0; i < userVaultsLength;) {
+        for (uint256 i = 0; i < userVaultsLength;) {
             if (userVaults[msg.sender][i] == _vault) {
                 return true;
             }

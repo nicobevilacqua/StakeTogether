@@ -37,7 +37,7 @@ contract MockSenseiStake is ERC721, Ownable {
         _burn(tokenId);
         uint256 bal = balance[tokenId];
         delete (balance[tokenId]);
-        (bool sent, ) = payable(msg.sender).call{value: bal}("");
+        (bool sent,) = payable(msg.sender).call{value: bal}("");
         require(sent, "invalid transfer to owner");
     }
 }

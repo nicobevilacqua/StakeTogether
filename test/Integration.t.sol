@@ -70,16 +70,13 @@ contract VaultManagerTest is Test {
         assertEq(senseiStake.ownerOf(0), vaultAddress, "No es el owner del nft");
 
         // avanzo 6 meses para que se libere la guita
-        vm.warp(block.timestamp + 30 days * 6);
+        vm.warp(block.timestamp + 30 days * 7);
         senseiStake.addRewards{value: 4 ether}(0);
         // cualquiera puede llamar esta funcion
         vault.exitStake();
 
         assertGt(vault.convertToAssets(vault.balanceOf(investor1)), 10 ether);
-        assertEq(
-            vault.convertToAssets(vault.balanceOf(investor1)),
-            (36 ether * 10 ether) / 32 ether
-        );
+        assertEq(vault.convertToAssets(vault.balanceOf(investor1)), (36 ether * 10 ether) / 32 ether);
 
         vm.startPrank(investor1);
         vault.redeemETH(vault.balanceOf(investor1));
@@ -88,12 +85,9 @@ contract VaultManagerTest is Test {
         assertEq(vault.balanceOf(investor1), 0, "should burn all shares");
 
         assertEq(vault.totalEarns(), 36 ether);
-
-
     }
 
-
-      function testCreateTwoVaults() public {
+    function testCreateTwoVaults() public {
         vm.startPrank(investor1);
         weth.approve(address(vaultManager), 16 ether);
         vaultManager.depositToVault(16 ether);
