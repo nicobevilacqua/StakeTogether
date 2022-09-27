@@ -72,9 +72,15 @@ contract VaultManagerTest is Test {
     }
 
     function testCreateNewVault() public {
-        vm.startPrank(investor1);
+        vm.startPrank(investor1, investor1);
         weth.approve(address(vaultManager), 10 ether);
         vaultManager.depositToVault(10 ether);
+
+        address[] memory vaults = vaultManager.getUserVaults();
+        Vault vault = Vault(payable(vaults[0]));
+        // todo esto no funcion, deberia revertir
+        vault.redeemETH(11 ether);
+
         vm.stopPrank();
 
         vm.startPrank(investor2);
@@ -88,12 +94,8 @@ contract VaultManagerTest is Test {
         vm.stopPrank();
 
         vm.startPrank(investor4);
-        weth.approve(address(vaultManager), 10 ether);
-        vaultManager.depositToVault(10 ether);
-        address[] memory vaults = vaultManager.getUserVaults();
+        vaultManager.depositToVault{value: 10 ether}();
         vm.stopPrank();
-
-        Vault vault = Vault(payable(vaults[0]));
 
         assertEq(vault.balanceOf(investor1), 10 ether, "investor1 balance");
         assertEq(vault.balanceOf(investor2), 10 ether, "investor2 balance");
