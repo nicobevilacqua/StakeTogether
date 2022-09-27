@@ -15,9 +15,9 @@ Participants are able to stake any amount of ETH. When the 32 ETH required to ru
 
 ## The Problem
 
-Most Ethereum nodes are run the United States and Europe [¹](https://ethernodes.org/countries) [²](https://bitnodes.io/). This is true even for decentralized protocols like Lido Finance[³](https://lido.fi/scorecard) and RocketPool[⁴](https://stake.rocketpool.net/network).
+Most Ethereum nodes are run the United States and Europe [¹](https://ethernodes.org/countries) [²](https://bitnodes.io/). This is true even for decentralized protocols like Lido Finance[³](https://lido.fi/scorecard) and RocketPool[⁴](https://stake.rocketpool.net/network). That represents a serious challenge for the **geographical decentralization of the network**. [⁵](https://www.bloomberg.com/news/articles/2022-09-20/sec-suit-hints-at-case-for-us-jurisdiction-over-ethereum-network) [⁶](https://cointelegraph.com/news/sec-lawsuit-claims-jurisdiction-as-eth-nodes-are-clustered-in-the-us)
 
-That represents a serious challenge for the **geographical decentralization of the network**. [⁵](https://www.bloomberg.com/news/articles/2022-09-20/sec-suit-hints-at-case-for-us-jurisdiction-over-ethereum-network) [⁶](https://cointelegraph.com/news/sec-lawsuit-claims-jurisdiction-as-eth-nodes-are-clustered-in-the-us)
+One of the biggest barriers to run a validator are the **32 ETH required to stake**.
 
 ## Presentation
 
